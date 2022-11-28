@@ -1,6 +1,5 @@
 package com.kiliccambaz.movieapp.ui.home
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,14 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kiliccambaz.movieapp.data.ResultsItem
 import com.kiliccambaz.movieapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), AdapterClickListener {
 
     private var _binding: FragmentHomeBinding? = null
     val viewModel by viewModels<HomeViewModel>()
@@ -23,6 +23,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getUpcomingMovies()
+        viewModel.getNowPlayingMovies()
     }
 
     override fun onCreateView(
@@ -35,25 +36,25 @@ class HomeFragment : Fragment() {
                 it.results?.let { movies -> setRecyclerItems(movies) }
             }
         })
+
         return _binding!!.root
     }
 
     private fun setRecyclerItems(data: List<ResultsItem>) {
-        val mAdapter = HomeAdapter(data, object : AdapterClickListener {
-
-            override fun onRecyclerViewItemClick(movie: ResultsItem) {
-                val navigation =
-                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(movie.id)
-                Navigation.findNavController(requireView()).navigate(navigation)
-            }
-        })
+        val mAdapter = HomeAdapter(data, this)
         _binding!!.rvHome.layoutManager = LinearLayoutManager(context)
+        _binding!!.rvHome.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
         _binding!!.rvHome.adapter = mAdapter
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onRecyclerViewItemClick(id: Int) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(id)
+        findNavController().navigate(action)
     }
 
 }

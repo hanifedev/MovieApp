@@ -7,25 +7,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.kiliccambaz.movieapp.R
+import com.kiliccambaz.movieapp.databinding.FragmentDetailBinding
+import com.kiliccambaz.movieapp.databinding.FragmentHomeBinding
 import com.kiliccambaz.movieapp.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
 
+    private var _binding: FragmentDetailBinding? = null
     val viewModel by viewModels<DetailViewModel>()
+    val args: DetailFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val movieId = args.movieId
+        viewModel.getMovieDetail(movieId)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
+    ): View {
+        _binding = FragmentDetailBinding.inflate(layoutInflater)
+        viewModel.movieDetail.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                 _binding!!.movie = it
+            }
+        })
+        return _binding!!.root
     }
 
 }

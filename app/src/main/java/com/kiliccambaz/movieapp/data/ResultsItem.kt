@@ -1,5 +1,7 @@
 package com.kiliccambaz.movieapp.data
 
+import com.google.gson.annotations.SerializedName
+
 data class ResultsItem(val overview: String = "",
                        val originalLanguage: String = "",
                        val originalTitle: String = "",
@@ -7,10 +9,13 @@ data class ResultsItem(val overview: String = "",
                        val title: String = "",
                        val genreIds: List<Integer>?,
                        val posterPath: String = "",
+                       @SerializedName("backdrop_path")
                        val backdropPath: String = "",
+                       @SerializedName("release_date")
                        val releaseDate: String = "",
                        val popularity: Double = 0.0,
-                       val voteAverage: Int = 0,
+                       @SerializedName("vote_average")
+                       val voteAverage: Double = 0.0,
                        val id: Int = 0,
                        val adult: Boolean = false,
                        val voteCount: Int = 0)
