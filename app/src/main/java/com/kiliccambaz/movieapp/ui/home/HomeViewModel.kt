@@ -8,9 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.kiliccambaz.movieapp.data.NowPlayingResult
 import com.kiliccambaz.movieapp.data.UpcomingResult
 import com.kiliccambaz.movieapp.repository.MoviesRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel constructor(private val moviesRepository: MoviesRepository): ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val moviesRepository: MoviesRepository): ViewModel() {
 
     private val _upcomingMovies: MutableLiveData<UpcomingResult?> = MutableLiveData()
     val upcomingMovies : LiveData<UpcomingResult?> = _upcomingMovies

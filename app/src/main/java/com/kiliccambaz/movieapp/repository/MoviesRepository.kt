@@ -3,8 +3,9 @@ package com.kiliccambaz.movieapp.repository
 import com.kiliccambaz.movieapp.data.NowPlayingResult
 import com.kiliccambaz.movieapp.data.UpcomingResult
 import com.kiliccambaz.movieapp.network.ApiService
+import javax.inject.Inject
 
-class MoviesRepository constructor(private val apiService: ApiService) {
+class MoviesRepository @Inject constructor(private val apiService: ApiService) {
 
 
     suspend fun getUpcomingMovies(): UpcomingResult {
