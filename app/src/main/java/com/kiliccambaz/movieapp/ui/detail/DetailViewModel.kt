@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kiliccambaz.movieapp.data.MovieDetail
-import com.kiliccambaz.movieapp.data.NowPlayingResult
-import com.kiliccambaz.movieapp.data.ResultsItem
 import com.kiliccambaz.movieapp.repository.MoviesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

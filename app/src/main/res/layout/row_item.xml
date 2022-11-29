@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="movie"
-            type="com.kiliccambaz.movieapp.data.ResultsItem"/>
+            type="com.kiliccambaz.movieapp.data.Movie"/>
 
         <variable
             name="clickListener"

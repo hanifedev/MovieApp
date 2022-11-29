@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kiliccambaz.movieapp.data.ResultsItem
+import com.kiliccambaz.movieapp.data.Movie
 import com.kiliccambaz.movieapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,16 +31,16 @@ class HomeFragment : Fragment(), AdapterClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater)
-        viewModel.upcomingMovies.observe(viewLifecycleOwner, Observer {
+        viewModel.upcomingMovies.observe(viewLifecycleOwner) {
             it?.let {
                 it.results?.let { movies -> setRecyclerItems(movies) }
             }
-        })
+        }
 
         return _binding!!.root
     }
 
-    private fun setRecyclerItems(data: List<ResultsItem>) {
+    private fun setRecyclerItems(data: List<Movie>) {
         val mAdapter = HomeAdapter(data, this)
         _binding!!.rvHome.layoutManager = LinearLayoutManager(context)
         _binding!!.rvHome.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))

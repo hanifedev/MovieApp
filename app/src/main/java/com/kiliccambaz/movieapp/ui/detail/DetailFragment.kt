@@ -19,8 +19,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
-    val viewModel by viewModels<DetailViewModel>()
-    val args: DetailFragmentArgs by navArgs()
+    private val viewModel by viewModels<DetailViewModel>()
+    private val args: DetailFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +33,11 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailBinding.inflate(layoutInflater)
-        viewModel.movieDetail.observe(viewLifecycleOwner, Observer {
+        viewModel.movieDetail.observe(viewLifecycleOwner) {
             it?.let {
-                 _binding!!.movie = it
+                _binding!!.movie = it
             }
-        })
+        }
         return _binding!!.root
     }
 

@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kiliccambaz.movieapp.BR
 import com.kiliccambaz.movieapp.R
-import com.kiliccambaz.movieapp.data.ResultsItem
+import com.kiliccambaz.movieapp.data.Movie
 
-class HomeAdapter constructor(private val movieList: List<ResultsItem>, private val adapterClickListener: AdapterClickListener) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter constructor(private val movieList: List<Movie>, private val adapterClickListener: AdapterClickListener) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     class HomeViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(movie: ResultsItem, clickListener: AdapterClickListener) {
+        fun bind(movie: Movie, clickListener: AdapterClickListener) {
             binding.setVariable(BR.movie, movie)
             binding.setVariable(BR.clickListener, clickListener)
         }

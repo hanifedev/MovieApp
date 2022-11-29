@@ -2,7 +2,6 @@ package com.kiliccambaz.movieapp.repository
 
 import com.kiliccambaz.movieapp.data.MovieDetail
 import com.kiliccambaz.movieapp.data.NowPlayingResult
-import com.kiliccambaz.movieapp.data.ResultsItem
 import com.kiliccambaz.movieapp.data.UpcomingResult
 import com.kiliccambaz.movieapp.network.ApiService
 import javax.inject.Inject
