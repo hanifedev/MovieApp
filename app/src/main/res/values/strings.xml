@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Mobillium Movie App</string>
+    <string name="app_name">Movie App</string>
+    <string name="generic_vote_average">%.1f</string>
 </resources>

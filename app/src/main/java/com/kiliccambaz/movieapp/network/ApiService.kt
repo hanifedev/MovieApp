@@ -6,11 +6,12 @@ import com.kiliccambaz.movieapp.data.UpcomingResult
 import com.kiliccambaz.movieapp.utils.Constants
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
     @GET("movie/upcoming?api_key=${Constants.API_KEY}")
-    suspend fun getUpcomingMovies(): UpcomingResult
+    suspend fun getUpcomingMovies(@Query("page") page: Int): UpcomingResult
 
     @GET("movie/now_playing?api_key=${Constants.API_KEY}")
     suspend fun getNowPlayingMovies(): NowPlayingResult

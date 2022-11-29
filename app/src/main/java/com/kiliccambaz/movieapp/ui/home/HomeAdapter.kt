@@ -6,13 +6,17 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kiliccambaz.movieapp.BR
 import com.kiliccambaz.movieapp.R
 import com.kiliccambaz.movieapp.data.Movie
 
-class HomeAdapter constructor(private val movieList: List<Movie>, private val adapterClickListener: AdapterClickListener) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter constructor(private val adapterClickListener: AdapterClickListener) :
+    PagingDataAdapter<Movie, HomeAdapter.HomeViewHolder>(DiffUtilCallBack) {
 
     class HomeViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -29,11 +33,21 @@ class HomeAdapter constructor(private val movieList: List<Movie>, private val ad
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        val movie = movieList[position]
-        holder.bind(movie, adapterClickListener)
+        val movie = getItem(position)
+        movie.let {
+            holder.bind(movie!!,adapterClickListener)
+        }
     }
 
-    override fun getItemCount() = movieList.size
+    object DiffUtilCallBack : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem == newItem
+        }
+    }
 
 }
 

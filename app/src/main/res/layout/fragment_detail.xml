@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/rate"
                 app:layout_constraintStart_toEndOf="@+id/iv_imdb"
                 app:layout_constraintTop_toBottomOf="@+id/iv_movie" />
@@ -50,9 +50,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="@{movie.title}"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_imdb" />
 
@@ -72,9 +74,20 @@
                 android:id="@+id/tv_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="@{String.valueOf(movie.voteAverage)}"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="18dp"
+                android:text="@{@string/generic_vote_average(movie.voteAverage)}"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_star"
+                app:layout_constraintTop_toBottomOf="@+id/iv_movie" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="18dp"
+                android:text="/10"
                 app:layout_constraintStart_toEndOf="@+id/iv_star"
                 app:layout_constraintTop_toBottomOf="@+id/iv_movie" />
         </androidx.constraintlayout.widget.ConstraintLayout>
