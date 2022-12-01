@@ -7,14 +7,17 @@ import com.kiliccambaz.movieapp.data.Movie
 import com.kiliccambaz.movieapp.data.NowPlayingResult
 import com.kiliccambaz.movieapp.repository.MoviesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val moviesRepository: MoviesRepository): ViewModel() {
 
-    val upcomingMovies : LiveData<PagingData<Movie>> = moviesRepository.getUpcomingMovies().cachedIn(viewModelScope)
-
+    fun getUpcomingMovies(): LiveData<PagingData<Movie>> {
+        return moviesRepository.getUpcomingMovies()
+            .cachedIn(viewModelScope)
+    }
     private val _nowPlayingMovies: MutableLiveData<NowPlayingResult?> = MutableLiveData()
     val nowPlayingMovies : LiveData<NowPlayingResult?> = _nowPlayingMovies
 

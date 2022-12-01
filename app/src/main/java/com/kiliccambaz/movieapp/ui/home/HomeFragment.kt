@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kiliccambaz.movieapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -30,20 +31,21 @@ class HomeFragment : Fragment(), AdapterClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater)
-        viewModel.upcomingMovies.observe(viewLifecycleOwner) {
-            it?.let {
-                val mAdapter = HomeAdapter( this)
-                _binding!!.rvHome.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
-                    adapter = mAdapter
-                }
-                lifecycleScope.launch {
-                    mAdapter.submitData(it)
-                }
-            }
-        }
         return _binding!!.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val mAdapter = HomeAdapter( this)
+        _binding!!.rvHome.apply {
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
+            adapter = mAdapter
+        }
+        viewModel.getUpcomingMovies().observe(viewLifecycleOwner) { movies ->
+            mAdapter.submitData(viewLifecycleOwner.lifecycle,movies)
+        }
+
     }
 
     override fun onDestroyView() {
