@@ -1,17 +1,13 @@
-package com.kiliccambaz.movieapp.ui.slider
+package com.kiliccambaz.movieapp.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.kiliccambaz.movieapp.BR
 import com.kiliccambaz.movieapp.R
 import com.kiliccambaz.movieapp.data.Movie
-import com.kiliccambaz.movieapp.ui.home.AdapterClickListener
 
 class SliderAdapter constructor(private val movieList: List<Movie>, private val adapterClickListener: AdapterClickListener) : RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {
 
@@ -25,7 +21,7 @@ class SliderAdapter constructor(private val movieList: List<Movie>, private val 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SliderViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, R.layout.row_item,parent,false)
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(layoutInflater, R.layout.slider_item,parent,false)
         return SliderViewHolder(binding)
     }
 

@@ -1,19 +1,18 @@
 package com.kiliccambaz.movieapp.ui.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayoutMediator
 import com.kiliccambaz.movieapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), AdapterClickListener {
@@ -36,16 +35,28 @@ class HomeFragment : Fragment(), AdapterClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mAdapter = HomeAdapter( this)
+        val rvAdapter = HomeAdapter( this)
         _binding!!.rvHome.apply {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
-            adapter = mAdapter
+            adapter = rvAdapter
         }
         viewModel.getUpcomingMovies().observe(viewLifecycleOwner) { movies ->
-            mAdapter.submitData(viewLifecycleOwner.lifecycle,movies)
+            rvAdapter.submitData(viewLifecycleOwner.lifecycle,movies)
         }
 
+        viewModel.nowPlayingMovies.observe(viewLifecycleOwner) { nowPlaying ->
+            if (nowPlaying != null) {
+                nowPlaying.results?.let {
+                    val sliderAdapter = SliderAdapter( nowPlaying.results.take(5),this)
+                    _binding!!.vpSlider.adapter = sliderAdapter
+                    val tabLayoutMediator = TabLayoutMediator(
+                        _binding!!.tlDots, _binding!!.vpSlider, true
+                    ) { _, _ -> }
+                    tabLayoutMediator.attach()
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

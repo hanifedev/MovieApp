@@ -1,4 +1,4 @@
-package com.kiliccambaz.movieapp.di
+package com.kiliccambaz.movieapp
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
